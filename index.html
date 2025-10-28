@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Password Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Rest of the HTML remains the same -->
+    <h1>Advanced Password Generator</h1>
+    <p>Generate secure, customizable passwords. Select options below.</p>
+
+    <form method="POST">
+        <label for="length">Password Length:</label>
+        <input type="number" id="length" name="length" value="12" min="1" required>
+
+        <label for="count">Number of Passwords:</label>
+        <input type="number" id="count" name="count" value="1" min="1" required>
+
+        <label>Character Types (select at least one):</label>
+        <input type="checkbox" id="upper" name="upper" checked> <label for="upper">Uppercase letters (A-Z)</label><br>
+        <input type="checkbox" id="lower" name="lower" checked> <label for="lower">Lowercase letters (a-z)</label><br>
+        <input type="checkbox" id="digits" name="digits" checked> <label for="digits">Digits (0-9)</label><br>
+        <input type="checkbox" id="punct" name="punct" checked> <label for="punct">Symbols (!@#$%^&*)</label><br>
+
+        <button type="submit">Generate Passwords</button>
+    </form>
+
+    {% if passwords %}
+        <h2>Generated Passwords:</h2>
+        <div class="passwords">
+            {% for pwd in passwords %}
+                <p>{{ pwd }}</p>
+            {% endfor %}
+        </div>
+        <a href="/download?{{ 'passwords=' + passwords|join('&passwords=') }}" download>Download as Text File</a>
+    {% endif %}
+</body>
+</html>
